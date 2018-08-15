@@ -4,7 +4,8 @@ var HomePage = {
   template: "#home-page",
   data: function() {
     return {
-      posts: []
+      posts: [],
+      titleFilter: ""
     };
   },
   created: function() {
@@ -94,9 +95,41 @@ var LogoutPage = {
   }
 };
 
+var PostNewPage = {
+  template: "#post-new-page",
+  data: function() {
+    return {
+      title: "",
+      body: "",
+      image: "",
+      errors: []
+    };
+  },
+  methods: {
+    submit: function() {
+      var params = {
+        title: this.title,
+        body: this.body,
+        image: this.image,
+      };
+      axios
+        .post("/v1/posts", params)
+        .then(function(response) {
+          router.push("/");
+        })
+        .catch(
+          function(error) {
+            this.errors = error.response.data.errors;
+          }.bind(this)
+        );
+    }
+  }
+};
+
 var router = new VueRouter({
   routes: [
     { path: "/", component: HomePage },
+    { path: "/posts/new", component: PostNewPage },
     { path: "/signup", component: SignupPage },
     { path: "/login", component: LoginPage },
     { path: "/logout", component: LogoutPage }

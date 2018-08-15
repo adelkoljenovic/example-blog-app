@@ -5,6 +5,7 @@
   <title>My App</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <script src="https://unpkg.com/vue/dist/vue.js"></script>
+  <script src="https://unpkg.com/vue2-filters/dist/vue2-filters.js"></script>
   <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
   <script src="https://unpkg.com/axios/dist/axios.js"></script>
   <script src="index.js" defer></script>
@@ -27,7 +28,9 @@
 <template id="home-page">
   <div class="vue-component">
 
+    Search Here: <input v-model="titleFilter">
     <div v-for="post in posts">
+    <div v-for="post in filterBy(posts, titleFilter, 'title')">
       <h5>{{ post.title }}</h5>
       <p>{{ post.body }}</p>
       <img style="width:100px;height:100px;" v-bind:src="post.image">
@@ -82,6 +85,32 @@
       <div class="form-group">
         <label>Password:</label>
         <input type="password" class="form-control" v-model="password">
+      </div>
+      <button class="btn btn-primary" v-on:click="submit()">Submit</button>
+    </div>
+
+  </div>
+</template>
+
+<template id="post-new-page">
+  <div class="vue-component">
+
+    <div class="container">
+      <h1>Create New Post</h1>
+      <ul>
+        <li class="text-danger" v-for="error in errors">{{ error }}</li>
+      </ul>
+      <div class="form-group">
+        <label>Title:</label> 
+        <input type="text" class="form-control" v-model="title">
+      </div>
+      <div class="form-group">
+        <label>Body:</label>
+        <input type="email" class="form-control" v-model="body">
+      </div>
+      <div class="form-group">
+        <label>Image URL:</label>
+        <input type="test" class="form-control" v-model="image">
       </div>
       <button class="btn btn-primary" v-on:click="submit()">Submit</button>
     </div>
