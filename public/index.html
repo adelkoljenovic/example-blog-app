@@ -29,7 +29,7 @@
   <div class="vue-component">
 
     Search Here: <input v-model="titleFilter">
-    <div v-for="post in posts">
+    
     <div v-for="post in filterBy(posts, titleFilter, 'title')">
       <h5>{{ post.title }}</h5>
       <p>{{ post.body }}</p>
